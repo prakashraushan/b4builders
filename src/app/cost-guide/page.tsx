@@ -1,0 +1,206 @@
+import type { Metadata } from "next";
+import Link from "next/link";
+import { SITE_URL } from "@/lib/data";
+
+export const metadata: Metadata = {
+  title: "Construction Cost Guide — Bangalore",
+  description:
+    "What does it cost to build a home in Bangalore? A plain-language guide to construction costs, what drives them, and how lime and RCC compare. Get a detailed estimate for your project.",
+  keywords: [
+    "construction cost Bangalore",
+    "house construction cost Bangalore",
+    "construction cost per sq ft Bangalore",
+    "lime construction cost Bangalore",
+    "RCC construction cost Bangalore",
+    "home building cost Bangalore",
+  ],
+  alternates: { canonical: `${SITE_URL}/cost-guide` },
+  openGraph: {
+    title: "Construction Cost Guide — Bangalore | B4 Builders",
+    description:
+      "What drives construction cost in Bangalore — and how lime vs RCC compare. A practical guide from B4 Builders.",
+  },
+};
+
+const factors = [
+  {
+    title: "Site conditions",
+    body: "Soil type affects foundation depth and cost. Rocky ground, high water tables, or unusual slope add to the structural work needed before the building even begins.",
+  },
+  {
+    title: "Design complexity",
+    body: "A straightforward rectangular plan is the most efficient to build. Cantilevers, curved walls, complex roof forms, and deep basements all add cost.",
+  },
+  {
+    title: "Material choices",
+    body: "The structural method (lime vs RCC, load-bearing vs framed) and the quality of finishes (basic tile vs marble, standard fixtures vs premium) have the biggest range in cost.",
+  },
+  {
+    title: "Built area",
+    body: "Total built-up area is the primary driver. Ground coverage, number of floors, covered parking, service areas — everything counts.",
+  },
+  {
+    title: "Finishes and interiors",
+    body: "The shell of a building is often 50–60% of the total cost. Finishes — flooring, kitchen, wardrobes, bathrooms — account for the rest and vary widely.",
+  },
+  {
+    title: "Site access",
+    body: "A difficult-to-reach plot, a narrow approach road, or a constrained urban site increases logistics and scaffolding cost.",
+  },
+];
+
+const methods = [
+  {
+    title: "Traditional & Eco-Friendly (lime, surkhee, Madras Terrace)",
+    profile: [
+      "Skilled labour cost is higher — lime work takes more time and expertise than cement-based work.",
+      "Material cost is broadly comparable; lime and brick are not inherently expensive.",
+      "The build takes longer to cure — lime strengthens over months, which affects programme.",
+      "Long-term payoff: lower maintenance, better thermal comfort, and a building that genuinely improves with age.",
+      "Well-suited to plots where natural ventilation and passive cooling are priorities.",
+    ],
+  },
+  {
+    title: "Modern & Conventional (RCC, cement plaster, contemporary finishes)",
+    profile: [
+      "Faster and more predictable programme — RCC cures in days, not months.",
+      "Labour cost is lower than lime for equivalent area; more standardised trades.",
+      "Versatile finish options: tile, stone, paint, cladding — wide cost range.",
+      "Scales well to larger built areas and multi-floor programs.",
+      "Easier to price precisely because the process is well understood.",
+    ],
+  },
+];
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: [
+    {
+      "@type": "Question",
+      name: "What is the construction cost per sq ft in Bangalore?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Construction cost in Bangalore varies significantly based on material choices, design complexity, finishes, and site conditions. Contact B4 Builders for a detailed estimate tailored to your project.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Is lime construction more expensive than RCC in Bangalore?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Lime construction typically costs more in skilled labour but is broadly comparable in materials. The build takes longer to cure, but delivers better thermal comfort and longevity.",
+      },
+    },
+  ],
+};
+
+export default function CostGuidePage() {
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+
+      {/* ── Hero ── */}
+      <section className="bg-[var(--background)] py-20 lg:py-28">
+        <div className="mx-auto max-w-7xl px-4 lg:px-8">
+          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[var(--accent)]">Cost guide</p>
+          <h1 className="mt-4 font-[var(--font-fraunces)] text-4xl font-light text-[var(--text)] sm:text-5xl lg:text-6xl">
+            What does it cost to<br />build in Bangalore?
+          </h1>
+          <p className="mt-5 max-w-2xl text-lg leading-relaxed text-[var(--text-muted)]">
+            A practical guide to what drives construction cost in Bangalore, how traditional and modern methods compare, and how to get a personalised estimate for your project.
+          </p>
+        </div>
+      </section>
+
+      {/* ── What drives cost ── */}
+      <section className="border-y border-[var(--border)] bg-[var(--surface)] py-16 lg:py-24">
+        <div className="mx-auto max-w-7xl px-4 lg:px-8">
+          <h2 className="font-[var(--font-fraunces)] text-2xl font-light text-[var(--text)] sm:text-3xl">
+            What drives construction cost
+          </h2>
+          <p className="mt-3 text-[var(--text-muted)]">
+            No two projects cost the same. Here are the main factors that affect your final number.
+          </p>
+          <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {factors.map((f) => (
+              <div key={f.title} className="rounded-xl border border-[var(--border)] bg-[var(--background)] p-6">
+                <h3 className="font-semibold text-[var(--text)]">{f.title}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-[var(--text-muted)]">{f.body}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── Method comparison ── */}
+      <section className="bg-[var(--background)] py-16 lg:py-24">
+        <div className="mx-auto max-w-7xl px-4 lg:px-8">
+          <h2 className="font-[var(--font-fraunces)] text-2xl font-light text-[var(--text)] sm:text-3xl">
+            How the two methods compare
+          </h2>
+          <p className="mt-3 max-w-xl text-[var(--text-muted)]">
+            Both are valid choices — the right one depends on your brief, timeline, and priorities.
+          </p>
+
+          <div className="mt-10 grid gap-6 md:grid-cols-2">
+            {methods.map((m) => (
+              <div key={m.title} className="rounded-xl border border-[var(--border)] bg-[var(--surface)] p-8">
+                <h3 className="font-semibold text-[var(--text)]">{m.title}</h3>
+                <ul className="mt-5 space-y-3">
+                  {m.profile.map((item) => (
+                    <li key={item} className="flex items-start gap-3 text-sm text-[var(--text-muted)]">
+                      <span className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-[var(--accent)]" aria-hidden="true" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── Indicative ranges ── */}
+      <section className="border-y border-[var(--border)] bg-[var(--surface)] py-16 lg:py-20">
+        <div className="mx-auto max-w-7xl px-4 lg:px-8">
+          <h2 className="font-[var(--font-fraunces)] text-2xl font-light text-[var(--text)] sm:text-3xl">
+            Indicative ranges
+          </h2>
+          <p className="mt-3 text-[var(--text-muted)]">
+            <span className="font-semibold text-[var(--text)]">TODO(Prakash): approve all figures before publishing.</span> Figures are provided as ranges — your actual cost depends on the specifics of your project.
+          </p>
+          <div className="mt-8 rounded-xl bg-[var(--background)] p-8 text-center">
+            <p className="text-[var(--text-muted)]">Cost ranges to be confirmed — <Link href="/contact" className="text-[var(--accent)] hover:underline">request a personalised estimate</Link>.</p>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Lead magnet form ── */}
+      <section className="bg-[var(--background)] py-16 lg:py-24">
+        <div className="mx-auto max-w-3xl px-4 lg:px-8">
+          <h2 className="font-[var(--font-fraunces)] text-2xl font-light text-[var(--text)] sm:text-3xl">
+            Get a detailed estimate for your project
+          </h2>
+          <p className="mt-3 text-[var(--text-muted)]">
+            Share the basics — site size, location, construction type, and rough brief — and we&apos;ll come back with a realistic range.
+          </p>
+          <div className="mt-8">
+            <Link
+              href="/contact"
+              className="inline-block rounded-lg bg-[var(--accent)] px-8 py-4 text-sm font-semibold text-white transition-colors hover:bg-[var(--accent-dark)]"
+            >
+              Request an estimate →
+            </Link>
+          </div>
+          <p className="mt-4 text-sm text-[var(--text-muted)]">
+            No commitment required. We respond within 24 hours, Mon–Sat.
+          </p>
+        </div>
+      </section>
+    </>
+  );
+}

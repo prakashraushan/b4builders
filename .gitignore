@@ -1,0 +1,10 @@
+# Google App Engine generated folder
+appengine-generated/
+node_modules/
+.next/
+__MACOSX/
+.claude/
+
+# Environment variables — never commit these
+.env.local
+.env.*.local
