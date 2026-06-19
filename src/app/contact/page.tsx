@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { SITE_URL, PHONE_DISPLAY, EMAIL, WHATSAPP_NUMBER, WHATSAPP_MESSAGE } from "@/lib/data";
+import { SITE_URL, PHONE_DISPLAY, EMAIL, WHATSAPP_NUMBER, WHATSAPP_MESSAGE, ADDRESS_LINE1, ADDRESS_LINE2 } from "@/lib/data";
 
 export const metadata: Metadata = {
   title: "Contact — Start your project",
@@ -114,8 +114,8 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <p className="text-xs font-semibold text-[var(--text-muted)]">Office</p>
-                    <p className="mt-0.5 text-sm text-[var(--text)]">Bengaluru, Karnataka</p>
-                    <p className="text-xs text-[var(--text-muted)]">TODO(Prakash): office address</p>
+                    <p className="mt-0.5 text-sm text-[var(--text)]">{ADDRESS_LINE1}</p>
+                    <p className="text-sm text-[var(--text)]">{ADDRESS_LINE2}</p>
                   </div>
                 </div>
               </address>

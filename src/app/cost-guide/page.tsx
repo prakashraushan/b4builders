@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { SITE_URL } from "@/lib/data";
+import { SITE_URL, packages } from "@/lib/data";
 
 export const metadata: Metadata = {
   title: "Construction Cost Guide — Bangalore",
@@ -81,7 +81,7 @@ const jsonLd = {
       name: "What is the construction cost per sq ft in Bangalore?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Construction cost in Bangalore varies significantly based on material choices, design complexity, finishes, and site conditions. Contact B4 Builders for a detailed estimate tailored to your project.",
+        text: "B4 Builders' RCC turnkey packages run from about ₹2,100/sqft (Basic) to ₹3,000/sqft (Premium) of built-up area, covering structure to finishes. The exact rate depends on material choices, design complexity, finishes, and site conditions — contact B4 Builders for a firm estimate after a site visit.",
       },
     },
     {
@@ -164,18 +164,46 @@ export default function CostGuidePage() {
         </div>
       </section>
 
-      {/* ── Indicative ranges ── */}
+      {/* ── Packages & indicative rates ── */}
       <section className="border-y border-[var(--border)] bg-[var(--surface)] py-16 lg:py-20">
         <div className="mx-auto max-w-7xl px-4 lg:px-8">
           <h2 className="font-[var(--font-fraunces)] text-2xl font-light text-[var(--text)] sm:text-3xl">
-            Indicative ranges
+            RCC turnkey packages & indicative rates
           </h2>
-          <p className="mt-3 text-[var(--text-muted)]">
-            <span className="font-semibold text-[var(--text)]">TODO(Prakash): approve all figures before publishing.</span> Figures are provided as ranges — your actual cost depends on the specifics of your project.
+          <p className="mt-3 max-w-2xl text-[var(--text-muted)]">
+            For a complete RCC home, foundation to handover, we offer three packages — Basic, Standard and Premium. Each is built end to end by one team on one bill, with the same structure throughout: same concrete, steel and cement. What changes is the finish — flooring, tiles, doors, paint, fittings, railings and elevation.
           </p>
-          <div className="mt-8 rounded-xl bg-[var(--background)] p-8 text-center">
-            <p className="text-[var(--text-muted)]">Cost ranges to be confirmed — <Link href="/contact" className="text-[var(--accent)] hover:underline">request a personalised estimate</Link>.</p>
+
+          <div className="mt-10 grid gap-6 md:grid-cols-3">
+            {packages.map((p) => (
+              <div
+                key={p.name}
+                className={`rounded-xl border p-6 ${
+                  p.highlight
+                    ? "border-[var(--accent)] bg-[var(--accent)]/5"
+                    : "border-[var(--border)] bg-[var(--background)]"
+                }`}
+              >
+                {p.highlight && (
+                  <p className="text-xs font-semibold uppercase tracking-wider text-[var(--accent)]">Most popular</p>
+                )}
+                <h3 className="mt-2 font-[var(--font-fraunces)] text-xl font-light text-[var(--text)]">{p.name}</h3>
+                <p className="mt-1 text-sm text-[var(--text-muted)]">{p.tagline}</p>
+                <p className="mt-5">
+                  <span className="text-3xl font-semibold text-[var(--text)]">{p.rate}</span>
+                  <span className="text-sm text-[var(--text-muted)]"> /sqft</span>
+                </p>
+                <p className="mt-1 text-sm text-[var(--text-muted)]">Indicative band {p.band}</p>
+              </div>
+            ))}
           </div>
+
+          <p className="mt-8 max-w-2xl text-sm leading-relaxed text-[var(--text-muted)]">
+            Rates are quoted on <span className="font-semibold text-[var(--text)]">built-up area</span> — the total slab area across all floors, including balconies, staircase, utility and parapet. As a working example, a 2,000 sqft home in the Standard package works out to about ₹50 lakh. These are indicative package rates for the agreed plan and standard site conditions — your firm rate is confirmed in the project quotation after a site visit. Design/structural drawings, plan-sanction and statutory charges, utility connections, and GST are quoted separately.
+          </p>
+          <p className="mt-4 text-[var(--text-muted)]">
+            Want the full specification — materials, finishes and what&apos;s included at each level? <Link href="/contact" className="text-[var(--accent)] hover:underline">Get in touch</Link>{" "}and we&apos;ll walk you through it.
+          </p>
         </div>
       </section>
 

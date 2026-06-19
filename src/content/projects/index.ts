@@ -1,8 +1,9 @@
 import type { Project } from "@/lib/types";
 import vaikunth from "./vaikunth";
+import rajradhaNilayam from "./rajradha-nilayam";
 import { placeholderProjects } from "./placeholders";
 
-export const allProjects: Project[] = [vaikunth, ...placeholderProjects];
+export const allProjects: Project[] = [vaikunth, rajradhaNilayam, ...placeholderProjects];
 
 export const publishedProjects = allProjects.filter((p) => p.published);
 

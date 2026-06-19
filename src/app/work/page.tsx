@@ -32,7 +32,7 @@ export default function WorkPage() {
             Our work
           </h1>
           <p className="mt-4 max-w-xl text-[var(--text-muted)]">
-            Seven projects completed or underway — traditional, modern, and interiors.
+            3 homes completed, 3 active builds — traditional, modern, and interiors.
           </p>
 
           {/* Filter */}

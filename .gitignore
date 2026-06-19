@@ -8,3 +8,10 @@ __MACOSX/
 # Environment variables — never commit these
 .env.local
 .env.*.local
+
+# macOS metadata
+.DS_Store
+**/.DS_Store
+
+# TypeScript build cache
+tsconfig.tsbuildinfo

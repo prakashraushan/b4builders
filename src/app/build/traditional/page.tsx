@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { allProjects } from "@/content/projects";
 import ProjectCard from "@/components/ProjectCard";
-import { SITE_URL, WHATSAPP_NUMBER, WHATSAPP_MESSAGE } from "@/lib/data";
+import { SITE_URL } from "@/lib/data";
 
 export const metadata: Metadata = {
   title: "Traditional & Eco-Friendly Construction",

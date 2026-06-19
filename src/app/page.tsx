@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
-import { SITE_URL, PHONE_DISPLAY, WHATSAPP_NUMBER, WHATSAPP_MESSAGE, EMAIL } from "@/lib/data";
+import { existsSync, statSync } from "fs";
+import { join } from "path";
+import { SITE_URL, PHONE_DISPLAY, WHATSAPP_NUMBER, WHATSAPP_MESSAGE, EMAIL, packages } from "@/lib/data";
 import { publishedProjects, featuredSlugs } from "@/content/projects";
 import ProjectCard from "@/components/ProjectCard";
 
@@ -12,11 +14,17 @@ export const metadata: Metadata = {
 const steps = [
   { title: "Estimate & BOQ", body: "We visit the site, understand the brief, and give you a detailed bill of quantities — no hidden line items." },
   { title: "Agreed milestones", body: "Work proceeds in clear stages, each tied to a payment milestone so you always know what's been completed." },
-  { title: "Photo progress updates", body: "Regular photos from site, shared with you as the build moves forward." },
+  { title: "Photo & video updates", body: "Regular photos and short videos from site, shared with you as the build moves forward." },
   { title: "Handover", body: "A final walkthrough together before keys are handed over. We stay reachable after." },
 ];
 
 export default function HomePage() {
+  const heroImagePath = join(process.cwd(), "public/hero/hero.jpg");
+  const hasHeroImage = existsSync(heroImagePath);
+  // Cache-bust on the file's mtime so swapping the photo (e.g. for Prakash's real project shots)
+  // always invalidates browser/CDN caches instead of silently serving the old bytes.
+  const heroImageVersion = hasHeroImage ? Math.floor(statSync(heroImagePath).mtimeMs) : 0;
+
   const featured = featuredSlugs
     .map((slug) => publishedProjects.find((p) => p.slug === slug))
     .filter(Boolean);
@@ -30,20 +38,33 @@ export default function HomePage() {
   return (
     <>
       {/* ── Hero ── */}
+      {/* TODO(Prakash): drop your hero photo at /public/hero/hero.jpg — it will load automatically */}
       <section className="relative flex min-h-[90vh] items-end overflow-hidden bg-[var(--charcoal)]">
-        {/* TODO(Prakash): place an elegant placeholder hero in /public/hero/ — a licensed Unsplash architectural photo */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/20 to-black/60" aria-hidden="true" />
+        {hasHeroImage && (
+          <Image
+            src={`/hero/hero.jpg?v=${heroImageVersion}`}
+            alt="A beautifully constructed home by B4 Builders, Bengaluru"
+            fill
+            className="object-cover object-center opacity-50"
+            priority
+            sizes="100vw"
+          />
+        )}
+        {/* Photo is dimmed (not just darkened by an overlay) so it blends into the charcoal
+            backdrop — the "faded" treatment basera builders uses on its hero, kept a touch
+            clearer here. A left-to-right wash on top keeps the text column legible. */}
+        <div
+          className="absolute inset-0 bg-gradient-to-r from-[var(--charcoal)]/70 via-[var(--charcoal)]/35 to-transparent"
+          aria-hidden="true"
+        />
 
         <div className="relative z-10 mx-auto w-full max-w-7xl px-4 pb-16 pt-32 lg:px-8 lg:pb-24">
-          <p className="animate-fade-in-up text-sm font-medium uppercase tracking-[0.2em] text-white/60">
-            Since 2022 · 7 projects · Bengaluru
-          </p>
           <h1
-            className="animate-fade-in-up animate-delay-100 mt-4 max-w-3xl font-[var(--font-fraunces)] text-5xl font-light leading-tight tracking-tight text-white sm:text-6xl lg:text-7xl"
+            className="animate-fade-in-up max-w-3xl font-[var(--font-fraunces)] text-5xl font-light leading-tight tracking-tight text-white sm:text-6xl lg:text-7xl"
           >
-            Homes built to last,<br />in Bangalore.
+            Building dreams.<br />Homes built to last.
           </h1>
-          <p className="animate-fade-in-up animate-delay-200 mt-6 max-w-xl text-lg leading-relaxed text-white/70">
+          <p className="animate-fade-in-up animate-delay-200 mt-6 max-w-xl text-lg leading-relaxed text-white/90 [text-shadow:0_1px_12px_rgba(0,0,0,0.45)]">
             End-to-end construction and interiors — in lime or concrete, design to handover.
           </p>
           <div className="animate-fade-in-up animate-delay-300 mt-8 flex flex-wrap gap-4">
@@ -62,6 +83,28 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* ── Quick facts strip ── */}
+      <div className="border-b border-[var(--border)] bg-[var(--surface)] py-12">
+        <div className="mx-auto grid max-w-4xl grid-cols-2 gap-8 px-4 text-center sm:grid-cols-4 lg:px-8">
+          <div>
+            <p className="font-[var(--font-fraunces)] text-4xl font-semibold tracking-tight text-[var(--accent)] sm:text-5xl">2022</p>
+            <p className="mt-1.5 text-sm font-medium text-[var(--text-muted)]">Founded</p>
+          </div>
+          <div>
+            <p className="font-[var(--font-fraunces)] text-4xl font-semibold tracking-tight text-[var(--accent)] sm:text-5xl">3</p>
+            <p className="mt-1.5 text-sm font-medium text-[var(--text-muted)]">Homes completed</p>
+          </div>
+          <div>
+            <p className="font-[var(--font-fraunces)] text-4xl font-semibold tracking-tight text-[var(--accent)] sm:text-5xl">3</p>
+            <p className="mt-1.5 text-sm font-medium text-[var(--text-muted)]">Active builds</p>
+          </div>
+          <div>
+            <p className="font-[var(--font-fraunces)] text-4xl font-semibold tracking-tight text-[var(--accent)] sm:text-5xl">Bengaluru</p>
+            <p className="mt-1.5 text-sm font-medium text-[var(--text-muted)]">Based in</p>
+          </div>
+        </div>
+      </div>
 
       {/* ── Two tracks ── */}
       <section className="bg-[var(--background)] py-20 lg:py-28" aria-label="What we build">
@@ -214,7 +257,7 @@ export default function HomePage() {
           <h2 className="font-[var(--font-fraunces)] text-3xl font-light text-white sm:text-4xl">
             How we work
           </h2>
-          <p className="mt-3 text-white/50">A clear process, every time.</p>
+          <p className="mt-3 text-white/65">A clear process, every time.</p>
 
           <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
             {steps.map((step, i) => (
@@ -223,7 +266,7 @@ export default function HomePage() {
                   {String(i + 1).padStart(2, "0")}
                 </span>
                 <h3 className="mt-3 text-base font-semibold text-white">{step.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-white/50">{step.body}</p>
+                <p className="mt-2 text-sm leading-relaxed text-white/65">{step.body}</p>
               </div>
             ))}
           </div>
@@ -233,16 +276,48 @@ export default function HomePage() {
       {/* ── Cost guide teaser ── */}
       <section className="bg-[var(--background)] py-20 lg:py-28">
         <div className="mx-auto max-w-7xl px-4 lg:px-8">
-          <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
+          <h2 className="font-[var(--font-fraunces)] text-3xl font-light text-[var(--text)] sm:text-4xl">
+            What does it cost to build in Bangalore?
+          </h2>
+
+          {/* RCC turnkey package rates at a glance */}
+          <div className="mt-8">
+            <p className="text-xs font-semibold uppercase tracking-wider text-[var(--text-muted)]">RCC turnkey packages, foundation to handover</p>
+            <div className="mt-5 grid gap-6 sm:grid-cols-3">
+              {packages.map((p) => (
+                <div
+                  key={p.name}
+                  className={`rounded-xl border p-6 ${
+                    p.highlight
+                      ? "border-[var(--accent)] bg-[var(--accent)]/5"
+                      : "border-[var(--border)] bg-[var(--surface)]"
+                  }`}
+                >
+                  {p.highlight && (
+                    <p className="text-xs font-semibold uppercase tracking-wider text-[var(--accent)]">Most popular</p>
+                  )}
+                  <h3 className="mt-2 font-[var(--font-fraunces)] text-lg font-light text-[var(--text)]">{p.name}</h3>
+                  <p className="mt-1 text-sm text-[var(--text-muted)]">{p.tagline}</p>
+                  <p className="mt-4">
+                    <span className="text-2xl font-semibold text-[var(--text)]">{p.rate}</span>
+                    <span className="text-sm text-[var(--text-muted)]"> /sqft</span>
+                  </p>
+                  <p className="mt-1 text-xs text-[var(--text-muted)]">Indicative band {p.band}</p>
+                </div>
+              ))}
+            </div>
+            <p className="mt-4 text-sm text-[var(--text-muted)]">
+              Rates are indicative, on built-up area, for the agreed plan and standard site conditions. See the <Link href="/cost-guide" className="text-[var(--accent)] hover:underline">cost guide</Link> for what each package includes.
+            </p>
+          </div>
+
+          <div className="mt-14 grid gap-12 lg:grid-cols-2 lg:items-center">
             <div>
-              <h2 className="font-[var(--font-fraunces)] text-3xl font-light text-[var(--text)] sm:text-4xl">
-                What does it cost to build in Bangalore?
-              </h2>
-              <p className="mt-4 leading-relaxed text-[var(--text-muted)]">
+              <p className="leading-relaxed text-[var(--text-muted)]">
                 Construction cost in Bangalore depends on the site, design complexity, material choices, and finishes. Traditional lime construction costs more in skilled labour; modern RCC builds are faster and more predictable. Both can be done within a thoughtful budget.
               </p>
               <p className="mt-3 text-[var(--text-muted)]">
-                Indicative starting range: <span className="font-semibold text-[var(--text)]">TODO(Prakash): approve figures before publish.</span>
+                Indicative starting range: <span className="font-semibold text-[var(--text)]">₹2,100 – ₹3,000 per sqft</span> for a complete RCC turnkey build (built-up area), depending on package and finish level.
               </p>
               <div className="mt-8 flex flex-wrap gap-4">
                 <Link

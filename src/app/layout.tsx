@@ -4,7 +4,7 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
-import { SITE_URL } from "@/lib/data";
+import { SITE_URL, ADDRESS_LINE1, ADDRESS_LINE2, socials } from "@/lib/data";
 
 const geist = Geist({
   variable: "--font-geist",
@@ -94,19 +94,31 @@ const jsonLd = {
     "End-to-end construction and interiors company in Bengaluru. Traditional/eco-friendly and modern/conventional construction, full interior fit-outs, design to handover.",
   url: SITE_URL,
   telephone: "+919035817133",
-  email: "prakash.raushan@gmail.com",
+  email: "b4builders1@gmail.com",
   foundingDate: "2022",
+  priceRange: "₹₹",
   address: {
     "@type": "PostalAddress",
+    streetAddress: ADDRESS_LINE1,
     addressLocality: "Bengaluru",
+    postalCode: "560102",
     addressRegion: "Karnataka",
     addressCountry: "IN",
   },
   geo: {
     "@type": "GeoCoordinates",
-    latitude: 12.9716,
-    longitude: 77.5946,
+    latitude: 12.9136,
+    longitude: 77.6412,
   },
+  openingHoursSpecification: [
+    {
+      "@type": "OpeningHoursSpecification",
+      dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+      opens: "09:00",
+      closes: "18:00",
+    },
+  ],
+  sameAs: socials.map((s) => s.href),
   areaServed: [
     { "@type": "City", name: "Bengaluru" },
     { "@type": "State", name: "Karnataka" },
