@@ -20,7 +20,7 @@ const team = [
   {
     name: "Gaurav HS",
     title: "Co-founder & Partner",
-    photo: "/team/gaurav.jpg" as string | null,
+    photo: "/team/gauravnew.jpg" as string | null,
     bio: "A practising lawyer and community builder who genuinely loves people, Gaurav brings the precision of legal thinking and the warmth of a natural connector to everything he does. His belief in accountability and doing right by people runs through how B4 Builders operates.",
   },
   {
