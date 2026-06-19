@@ -14,7 +14,7 @@ const team = [
   {
     name: "Kanishka Sathe",
     title: "Co-founder & Partner",
-    photo: null as string | null,
+    photo: "/team/kanishka.jpg" as string | null,
     bio: "A serial entrepreneur who has successfully built and scaled businesses including Manyavar and Shubh Sweets on HSR Layout's 27th Main, Kanishka brings sharp commercial instinct and natural leadership to B4 Builders. He believes the best businesses are built on genuine value — and that a home is no different.",
   },
   {
